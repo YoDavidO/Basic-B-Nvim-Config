@@ -4,6 +4,14 @@ vim.g.mapleader = " "
 map('n', '<leader>o', ':update<CR> :source<CR>')
 map('n', '<leader>w', ':write<CR>')
 map('n', '<leader>q', ':quit<CR>')
+map('n', '<leader>ss', ':mksession! .session.vim<CR>')
+map('n', '<leader>sr', ':source .session.vim<CR>')
+-- Comment line
+map('n', '<C-/>', 'gcc', { remap = true })
+map('v', '<C-/>', 'gc', { remap = true })
+-- Comment block
+map('v', '<C-S-/>', 'gcb', { remap = true })
+map('v', '<C-S-/>', 'gcb', { remap = true })
 
 -- Duplicate line
 map('n', '<C-d>', function()
