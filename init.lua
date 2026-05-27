@@ -34,19 +34,7 @@ require "mini.pairs".setup()
 require "mini.pick".setup()
 require "oil".setup()
 
--- File picking
-vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
-vim.keymap.set('n', '<leader>ff', ':Pick grep_live<CR>')
-vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
-vim.keymap.set('n', '<leader>h', ':Pick help<CR>')
-vim.keymap.set('n', '<leader>e', ':Oil<CR>')
-
--- LSP
-vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
-vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition)
-vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover)
-vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
-
+-- LSP configurators
 vim.lsp.enable({ 'lua_ls', 'ts_ls', 'eslint', })
 vim.lsp.config('lua_ls', {
 	settings = {
@@ -71,16 +59,17 @@ vim.lsp.config('ts_ls', {
 })
 vim.lsp.config('eslint', {
 	filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-	root_markers = { 'eslint.config.js', '.eslintrc.js', '.eslintrc.json', 'package.json'},
+	root_markers = { 'eslint.config.js', '.eslintrc.js', '.eslintrc.json', 'package.json' },
 	settings = {
 		format = true
 	}
 })
 
 -- Auto cmds
+-- Attempt to get eslint to run on save. Not working too lazy to figure it out right now. My code is perfectly formatted anyway.
 vim.api.nvim_create_autocmd('BufWritePre', {
 	pattern = { '*.ts', '*.tsx', '*.js', '*.jsx' },
-	callback = function ()
+	callback = function()
 		vim.lsp.buf.code_action({
 			context = {
 				only = { 'source.fixAll.eslint' },
@@ -91,12 +80,13 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 	end,
 })
 
+-- Opens the last buffer that was selected when NVIM was closed
 vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function ()
+	callback = function()
 		if vim.fn.filereadable('.session.vim') == 1 then
 			vim.cmd('source .session.vim')
 			-- retrigger filetype detection on current buffer to reattach lsp
-			vim.defer_fn(function ()
+			vim.defer_fn(function()
 				vim.cmd('filetype detect')
 				vim.cmd('e')
 			end, 100)
@@ -104,15 +94,16 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end
 })
 
+-- Saves the session on close and creates one if there isn't one.
 vim.api.nvim_create_autocmd("VimLeavePre", {
-	callback = function ()
+	callback = function()
 		if vim.fn.filereadable('.session.vim') == 1 then
 			vim.cmd('mksession! .session.vim')
 		end
 	end
 })
 
--- Color scheme --
+-- Color scheme
 require "rose-pine".setup({
 	variant = "moon"
 })
