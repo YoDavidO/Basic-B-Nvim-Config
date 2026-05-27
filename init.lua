@@ -4,6 +4,7 @@ require "keymap"
 -- Packages --
 vim.pack.add({
 	{ src = "https://github.com/vague2k/vague.nvim" },
+	{ src = "https://github.com/rose-pine/neovim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/nvim-mini/mini.pick" },
@@ -11,6 +12,7 @@ vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", },
 })
 
+-- Auto complete
 require "blink.cmp".setup({
 	completion = {
 		list = {
@@ -32,11 +34,14 @@ require "mini.pairs".setup()
 require "mini.pick".setup()
 require "oil".setup()
 
+-- File picking
 vim.keymap.set('n', '<leader>f', ':Pick files<CR>')
 vim.keymap.set('n', '<leader>ff', ':Pick grep_live<CR>')
 vim.keymap.set('n', '<leader>b', ':Pick buffers<CR>')
 vim.keymap.set('n', '<leader>h', ':Pick help<CR>')
 vim.keymap.set('n', '<leader>e', ':Oil<CR>')
+
+-- LSP
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition)
 vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover)
@@ -72,6 +77,7 @@ vim.lsp.config('eslint', {
 	}
 })
 
+-- Auto cmds
 vim.api.nvim_create_autocmd('BufWritePre', {
 	pattern = { '*.ts', '*.tsx', '*.js', '*.jsx' },
 	callback = function ()
@@ -107,5 +113,7 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 })
 
 -- Color scheme --
-require "vague".setup()
-vim.cmd("colorscheme vague")
+require "rose-pine".setup({
+	variant = "moon"
+})
+vim.cmd("colorscheme rose-pine")
