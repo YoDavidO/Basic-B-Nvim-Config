@@ -1,0 +1,32 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "0593548ee0b0978abf303d30f449234e07f951d1",
+      "src": "https://github.com/Saghen/blink.cmp"
+    },
+    "mini.completion": {
+      "rev": "04abe6fc7860858785ba63c435d76bf5b8b64b5f",
+      "src": "https://github.com/nvim-mini/mini.completion"
+    },
+    "mini.pairs": {
+      "rev": "30cf2f01c4aaa2033db67376b9924fa2442c05d6",
+      "src": "https://github.com/nvim-mini/mini.pairs"
+    },
+    "mini.pick": {
+      "rev": "4522d9ab65224675df2cf1ede8c12f0410aae2be",
+      "src": "https://github.com/nvim-mini/mini.pick"
+    },
+    "nvim-lspconfig": {
+      "rev": "a4ed4e761c400849e8c9f8bda33e5083f890268c",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "oil.nvim": {
+      "rev": "b91ee5a77a6a9605d9c1aaf4fda74b66082c8297",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "vague.nvim": {
+      "rev": "fd58046b9d64259d9785e4aeb6d6f494c6943cad",
+      "src": "https://github.com/vague2k/vague.nvim"
+    }
+  }
+}
