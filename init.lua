@@ -31,7 +31,27 @@ require "blink.cmp".setup({
 })
 
 require "mini.pairs".setup()
-require "mini.pick".setup()
+require "mini.pick".setup({
+	mappings = {
+		delete_buffer = {
+			char = "x",
+			func = function()
+				local matches = MiniPick.get_picker_matches()
+				if matches and matches.current then
+					local bufnr = matches.current.bufnr
+					vim.api.nvim_buf_delete(bufnr, { force = false })
+					local items = MiniPick.get_picker_items()
+					if items then
+						local filtered = vim.tbl_filter(function(item)
+							return item.bufnr ~= bufnr
+						end, items)
+						MiniPick.set_picker_items(filtered)
+					end
+				end
+			end
+		}
+	}
+})
 require "oil".setup()
 
 -- LSP configurators
