@@ -35,7 +35,7 @@ require "mini.pick".setup()
 require "oil".setup()
 
 -- LSP configurators
-vim.lsp.enable({ 'lua_ls', 'ts_ls', 'eslint', })
+vim.lsp.enable({ 'lua_ls', 'roslyn_ls' })
 vim.lsp.config('lua_ls', {
 	settings = {
 		Lua = {
@@ -45,40 +45,8 @@ vim.lsp.config('lua_ls', {
 		}
 	}
 })
-vim.lsp.config('ts_ls', {
-	filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-	root_markers = { 'tsconfig.json', 'package.json', '.git' },
-	settings = {
-		typescript = {
-			preferences = {
-				includeCompletionsForModuleExports = true,
-				importModuleSpecifier = "shortest"
-			}
-		}
-	}
-})
-vim.lsp.config('eslint', {
-	filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-	root_markers = { 'eslint.config.js', '.eslintrc.js', '.eslintrc.json', 'package.json' },
-	settings = {
-		format = true
-	}
-})
 
 -- Auto cmds
--- Attempt to get eslint to run on save. Not working too lazy to figure it out right now. My code is perfectly formatted anyway.
-vim.api.nvim_create_autocmd('BufWritePre', {
-	pattern = { '*.ts', '*.tsx', '*.js', '*.jsx' },
-	callback = function()
-		vim.lsp.buf.code_action({
-			context = {
-				only = { 'source.fixAll.eslint' },
-				diagnostics = {},
-			},
-			apply = true
-		})
-	end,
-})
 
 -- Opens the last buffer that was selected when NVIM was closed
 vim.api.nvim_create_autocmd("VimEnter", {
