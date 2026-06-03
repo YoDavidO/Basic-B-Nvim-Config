@@ -34,8 +34,11 @@ require "mini.pairs".setup()
 require "mini.pick".setup({
 	mappings = {
 		delete_buffer = {
-			char = "x",
+			char = "<C-x>",
 			func = function()
+				local picker = MiniPick.get_picker_opts()
+				if not picker or picker.source.name ~= 'Buffers' then return end
+
 				local matches = MiniPick.get_picker_matches()
 				if matches and matches.current then
 					local bufnr = matches.current.bufnr
