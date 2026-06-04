@@ -4,7 +4,7 @@ vim.g.mapleader = " "
 -- Buffer stuffs
 map('n', '<leader>o', ':update<CR> :source<CR>')
 map('n', '<leader>w', ':write<CR>')
-map('n', '<leader>q', ':quit<CR>')
+map('n', '<leader>q', ':qa<CR>')
 map('n', '<leader>ss', ':mksession! .session.vim<CR>')
 map('n', '<leader>sr', ':source .session.vim<CR>')
 

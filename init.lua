@@ -104,25 +104,34 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 -- Opens the last buffer that was selected when NVIM was closed
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		if vim.fn.filereadable('.session.vim') == 1 then
-			vim.cmd('source .session.vim')
-			-- retrigger filetype detection on current buffer to reattach lsp
-			vim.defer_fn(function()
-				vim.cmd('filetype detect')
-				vim.cmd('e')
-			end, 100)
-		end
-	end
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    if vim.fn.filereadable('.session.vim') == 1 then
+      vim.cmd('source .session.vim')
+      vim.defer_fn(function()
+        local current = vim.api.nvim_get_current_buf()
+        for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.api.nvim_buf_is_loaded(bufnr) then
+            vim.defer_fn(function()
+              vim.api.nvim_buf_call(bufnr, function()
+                vim.cmd('filetype detect')
+                vim.cmd('e')
+              end)
+            end, 150)
+          end
+        end
+        vim.defer_fn(function()
+          vim.api.nvim_set_current_buf(current)
+        end, 300)
+      end, 100)
+    end
+  end,
 })
 
 -- Saves the session on close and creates one if there isn't one.
 vim.api.nvim_create_autocmd("VimLeavePre", {
 	callback = function()
-		if vim.fn.filereadable('.session.vim') == 1 then
-			vim.cmd('mksession! .session.vim')
-		end
+		vim.cmd('mksession! .session.vim')
 	end
 })
 
